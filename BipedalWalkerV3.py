@@ -11,6 +11,11 @@ class BipedalWalkerV3:
             raise ValueError("Invalid environment. Please check if the environment name is correct.")
         self.model = PPO("MlpPolicy", self.env, verbose=1)
 
+        # self.env.learning_rate = 0.01
+        # self.env.discount_factor = 0.99
+        # self.env.epsilon = 0.1
+        # self.env.max_steps_per_episode = 1000
+
     def change_environment(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self.env, key, value)
