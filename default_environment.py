@@ -1,3 +1,4 @@
+# Default environment for the BipedalWalkerV3 environment, testing timesteps
 from BipedalWalkerV3 import BipedalWalkerV3
 
 environment_name = "default_env"
