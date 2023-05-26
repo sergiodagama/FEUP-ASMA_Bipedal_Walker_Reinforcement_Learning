@@ -83,5 +83,3 @@ class BipedalWalkerV3:
 
         average_reward = sum(rewards) / num_episodes
         print(f"Average reward over {num_episodes} episodes: {average_reward}")
-
-
