@@ -1,34 +1,38 @@
 import os
 import gym
 from stable_baselines3 import PPO
+from stable_baselines3 import A2C
+from stable_baselines3 import TD3   
 
+ 
 class BipedalWalkerV3:
     def __init__(self, env_name='BipedalWalker-v3'):
+        logdir = "logs"
+
+        if not os.path.exists(logdir):
+            os.makedirs(logdir)
+
         self.env_name = env_name
         self.env = gym.make(env_name)
 
         if self.env is None:
             raise ValueError("Invalid environment. Please check if the environment name is correct.")
-        self.model = PPO("MlpPolicy", self.env, verbose=1)
-
-        # self.env.learning_rate = 0.01
-        # self.env.discount_factor = 0.99
-        # self.env.epsilon = 0.1
-        # self.env.max_steps_per_episode = 1000
+        self.model = PPO("MlpPolicy", self.env, verbose=1, tensorboard_log=logdir)
 
     def change_environment(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self.env, key, value)
 
     def save_model(self, save_path, **kwargs):
-        modified_save_path = self._modify_path(save_path, **kwargs)
-        self.model.save(modified_save_path)
+        # modified_save_path = self._modify_path(save_path, **kwargs)
+        self.model.save(save_path)
 
     def load_model(self, load_path):
         self.model = PPO.load(load_path)
 
     def train_model(self, total_timesteps):
-        self.model.learn(total_timesteps=total_timesteps)
+        self.model.learn(total_timesteps=total_timesteps, tb_log_name=f"ppo"
+)
 
     def retrain_model(self, total_timesteps):
         self.model.learn(total_timesteps=total_timesteps, reset_num_timesteps=False)
