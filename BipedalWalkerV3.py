@@ -24,14 +24,14 @@ class BipedalWalkerV3:
             setattr(self.env, key, value)
 
     def save_model(self, save_path, **kwargs):
-        # modified_save_path = self._modify_path(save_path, **kwargs)
-        self.model.save(save_path)
+        modified_save_path = self._modify_path(save_path, **kwargs)
+        self.model.save(modified_save_path)
 
     def load_model(self, load_path):
         self.model = PPO.load(load_path)
 
     def train_model(self, total_timesteps):
-        self.model.learn(total_timesteps=total_timesteps, tb_log_name=f"ppo"
+        self.model.learn(total_timesteps=total_timesteps, tb_log_name=f"bipedal_walker_log_gravity_{self.env.gravity}_velocity_{self.env.target_velocity}_learning_rate_{self.env.learning_rate}_discount_factor_{self.env.discount_factor}_epsilon_{self.env.epsilon}.zip"
 )
 
     def retrain_model(self, total_timesteps):
